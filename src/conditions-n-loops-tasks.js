@@ -145,8 +145,59 @@ function convertToRomanNumerals(num) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  let symbol;
+  let symbolWord;
+  let result = '';
+  for (let i = 0; i < numberStr.length; i += 1) {
+    symbol = numberStr[i];
+    switch (symbol) {
+      case '-':
+        symbolWord = 'minus';
+        break;
+      case '.':
+      case ',':
+        symbolWord = 'point';
+        break;
+      case '0':
+        symbolWord = 'zero';
+        break;
+      case '1':
+        symbolWord = 'one';
+        break;
+      case '2':
+        symbolWord = 'two';
+        break;
+      case '3':
+        symbolWord = 'three';
+        break;
+      case '4':
+        symbolWord = 'four';
+        break;
+      case '5':
+        symbolWord = 'five';
+        break;
+      case '6':
+        symbolWord = 'six';
+        break;
+      case '7':
+        symbolWord = 'seven';
+        break;
+      case '8':
+        symbolWord = 'eight';
+        break;
+      case '9':
+        symbolWord = 'nine';
+        break;
+      default:
+        symbolWord = '';
+    }
+    if (result) {
+      result += ' ';
+    }
+    result += symbolWord;
+  }
+  return result;
 }
 
 /**
@@ -161,8 +212,13 @@ function convertNumberToString(/* numberStr */) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  for (let i = 0; i <= Math.floor(str.length / 2); i += 1) {
+    if (str[i] !== str[str.length - 1 - i]) {
+      return false;
+    }
+  }
+  return true;
 }
 
 /**
@@ -227,8 +283,29 @@ function isContainNumber(num, digit) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  const arrLength = arr.length;
+  let result = -1;
+  let leftSum = 0;
+  let rightSum = 0;
+  if (arrLength < 3) {
+    return result;
+  }
+  for (let i = 1; i < arrLength - 1; i += 1) {
+    for (let j = 0; j < i; j += 1) {
+      leftSum += arr[j];
+    }
+    for (let k = i + 1; k < arrLength; k += 1) {
+      rightSum += arr[k];
+    }
+    if (leftSum === rightSum) {
+      result = i;
+    } else {
+      leftSum = 0;
+      rightSum = 0;
+    }
+  }
+  return result;
 }
 
 /**
@@ -252,8 +329,30 @@ function getBalanceIndex(/* arr */) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const matrix = [];
+  let step = size - 1;
+  let x = 0;
+  let y = 0;
+  for (let i = 0; i < size; i += 1) {
+    matrix[i] = [];
+  }
+  for (let i = 1; i <= size ** 2; i += 1) {
+    matrix[x][y] = i;
+    if (x === step && y === size - step - 1) {
+      step -= 1;
+    }
+    if ((y >= x && y < step) || (x - 1 === y && x === size - step - 1)) {
+      y += 1;
+    } else if (x <= y && x < step) {
+      x += 1;
+    } else if (y <= x && y >= size - step) {
+      y -= 1;
+    } else if (x >= y && x >= size - step) {
+      x -= 1;
+    }
+  }
+  return matrix;
 }
 
 /**
@@ -271,8 +370,22 @@ function getSpiralMatrix(/* size */) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  const resultMatrix = [];
+  for (let i = 0; i < matrix.length; i += 1) {
+    resultMatrix[i] = [];
+  }
+  for (let i = 0; i < matrix.length; i += 1) {
+    for (let j = 0; j < matrix.length; j += 1) {
+      resultMatrix[j][matrix.length - 1 - i] = matrix[i][j];
+    }
+  }
+  const copy = matrix;
+  for (let i = 0; i < matrix.length; i += 1) {
+    for (let j = 0; j < matrix.length; j += 1) {
+      copy[i][j] = resultMatrix[i][j];
+    }
+  }
 }
 
 /**
